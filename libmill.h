@@ -278,6 +278,41 @@ MILL_EXPORT ipaddr ipremote(const char *name, int port, int mode,
 /*  TCP library                                                               */
 /******************************************************************************/
 
+/* The buffer size is based on typical Ethernet MTU (1500 bytes). Making it
+   smaller would yield small suboptimal packets. Making it higher would bring
+   no substantial benefit. The value is made smaller to account for IPv4/IPv6
+   and TCP headers. Few more bytes are subtracted to account for any possible
+   IP or TCP options */
+#ifndef MILL_TCP_BUFLEN
+#define MILL_TCP_BUFLEN (1500 - 68)
+#endif
+
+enum mill_tcptype {
+   MILL_TCPLISTENER,
+   MILL_TCPCONN
+};
+
+struct mill_tcpsock {
+    enum mill_tcptype type;
+};
+
+struct mill_tcplistener {
+    struct mill_tcpsock sock;
+    int fd;
+    int port;
+};
+
+struct mill_tcpconn {
+    struct mill_tcpsock sock;
+    int fd;
+    size_t ifirst;
+    size_t ilen;
+    size_t olen;
+    char ibuf[MILL_TCP_BUFLEN];
+    char obuf[MILL_TCP_BUFLEN];
+};
+typedef struct mill_tcpconn *tcpconn;
+
 typedef struct mill_tcpsock *tcpsock;
 
 MILL_EXPORT tcpsock tcplisten(ipaddr addr, int backlog);
