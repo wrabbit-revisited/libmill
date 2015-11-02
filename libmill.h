@@ -295,12 +295,14 @@ enum mill_tcptype {
 struct mill_tcpsock {
     enum mill_tcptype type;
 };
+typedef struct mill_tcpsock *tcpsock;
 
 struct mill_tcplistener {
     struct mill_tcpsock sock;
     int fd;
     int port;
 };
+typedef struct mill_tcplistener *tcplistener;
 
 struct mill_tcpconn {
     struct mill_tcpsock sock;
