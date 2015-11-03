@@ -315,8 +315,6 @@ struct mill_tcpconn {
 };
 typedef struct mill_tcpconn *tcpconn;
 
-typedef struct mill_tcpsock *tcpsock;
-
 MILL_EXPORT tcpsock tcplisten(ipaddr addr, int backlog);
 MILL_EXPORT int tcpport(tcpsock s);
 MILL_EXPORT tcpsock tcpaccept(tcpsock s, int64_t deadline);
