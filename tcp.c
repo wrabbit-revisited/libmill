@@ -57,7 +57,7 @@ static void mill_tcptune(int s) {
 #endif
 }
 
-static void tcpconn_init(struct mill_tcpconn *conn, int fd) {
+void tcpconn_init(struct mill_tcpconn *conn, int fd) {
     conn->sock.type = MILL_TCPCONN;
     conn->fd = fd;
     conn->ifirst = 0;
